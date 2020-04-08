@@ -1,5 +1,7 @@
 const express = require('express');
 
+const userDataBase = require('./userDb.js');
+
 const router = express.Router();
 
 router.post('/', (req, res) => {
@@ -12,6 +14,18 @@ router.post('/:id/posts', (req, res) => {
 
 router.get('/', (req, res) => {
   // do your magic!
+  userDataBase.get()
+  .then(posts => {
+    if(posts.length > 0){
+      res.status(200).json(posts)
+    } else {
+      res.status(400).json({message: 'error 400'})
+    }
+  })
+  .catch(err =>{
+    console.log(err);
+    res.status(500).json({message: 'error 500'})
+  })
 });
 
 router.get('/:id', (req, res) => {
@@ -33,15 +47,21 @@ router.put('/:id', (req, res) => {
 //custom middleware
 
 function validateUserId(req, res, next) {
-  // do your magic!
+  return function (req,res,next){
+
+  }
 }
 
 function validateUser(req, res, next) {
-  // do your magic!
+  return function (req,res,next){
+
+  }
 }
 
 function validatePost(req, res, next) {
-  // do your magic!
+  return function (req,res,next){
+
+  }
 }
 
 module.exports = router;
